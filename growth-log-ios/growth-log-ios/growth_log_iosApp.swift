@@ -23,14 +23,24 @@ struct RootView: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            LogsListView() { route in}
-        }
-        .navigationDestination(for: Route.self) { route in
-            switch route {
-            case .home:
-                LogsListView() { route in}
-            default:
-                EmptyView()
+            LogsListView() { route in
+                path.append(route)
+            }
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .register:
+                    LogRegisterView(onNavigate: { route in
+                        if route == .home {
+                            path.removeAll()
+                        } else {
+                            path.append(route)
+                        }
+                    }, onBack: {
+                        path.removeAll()
+                    })
+                default:
+                    EmptyView()
+                }
             }
         }
     }

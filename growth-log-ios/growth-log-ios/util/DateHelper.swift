@@ -30,8 +30,12 @@ final class DateHelper {
         guard !date.isEmpty else { return Date() }
 
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd hh:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         formatter.locale = Locale(identifier: "ja_JP")
         return formatter.date(from: date) ?? Date()
+    }
+    
+    static func startOfDay(date: Date = Date(), calendar: Calendar = .current) -> Date {
+        calendar.startOfDay(for: date)
     }
 }

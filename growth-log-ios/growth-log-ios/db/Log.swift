@@ -12,14 +12,20 @@ import SwiftData
 class Log {
     @Attribute(.unique) var id: String
     var title: String
-    var content: String
+    var done: String
+    var learn: String
+    var block: String
+    var next: String
     var createdAt: String
     var updatedAt: String
 
-    init(id: String = UUID().uuidString, title: String, content: String, createdAt: String, updatedAt: String) {
+    init(id: String = UUID().uuidString, title: String, done: String, learn: String, block: String, next: String, createdAt: String, updatedAt: String) {
         self.id = id
         self.title = title
-        self.content = content
+        self.done = done
+        self.learn = learn
+        self.block = block
+        self.next = next
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
