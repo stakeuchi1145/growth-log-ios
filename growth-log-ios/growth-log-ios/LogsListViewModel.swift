@@ -15,7 +15,5 @@ class LogsListViewModel: ObservableObject {
     @Published var logs: [Log] = []
     
     func getLogs() {
-        logs.append(Log(date: DateHelper.convertDate(date: "2025-12-30 12:40:00"), content: "今日の記録"))
-        logs.append(Log(date: DateHelper.convertDate(date: "2025-12-31 23:20:00"), content: "今日の記録"))
     }
 }

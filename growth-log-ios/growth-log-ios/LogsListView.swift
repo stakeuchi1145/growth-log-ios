@@ -5,16 +5,16 @@
 //  Created by shin takeuchi on 2026/01/01.
 //
 
+import SwiftData
 import SwiftUI
 
-struct Log: Hashable {
-    let date: Date
-    let content: String
-}
-
 struct LogsListView: View {
+    let onNavigate: (Route) -> Void
+
     @ObservedObject var viewModel = LogsListViewModel.shared
-    @State var onNavigate: (Route) -> Void
+    @Environment(\.modelContext) private var modelContext
+
+    @Query(sort: \Log.createdAt) private var logs: [Log]
 
     var body: some View {
         ZStack {
@@ -128,10 +128,10 @@ struct LogsListView: View {
 
                     ScrollView {
                         LazyVStack {
-                            ForEach(viewModel.logs, id: \.self) { log in
+                            ForEach(logs) { log in
                                 VStack {
                                     HStack {
-                                        Text("\(DateHelper.toDay(date: log.date, format: "MM/dd hh:mm"))")
+                                        Text("\(DateHelper.toDay(date: DateHelper.convertDate(date: log.createdAt), format: "MM/dd hh:mm"))")
                                             .font(.system(size: 20))
                                             .fontWeight(.semibold)
 
@@ -161,6 +161,17 @@ struct LogsListView: View {
         }
         .navigationBarBackButtonHidden(true)
         .task {
+            modelContext.insert(
+                Log(
+                    title: "今日の記録",
+                    content: "今日の記録",
+                    createdAt: DateHelper.toDay(date: Date()),
+                    updatedAt: DateHelper.toDay(date: Date())
+                )
+            )
+
+            debugPrint("logs count: \(logs.count)")
+            debugPrint("logs last: \(logs.last?.title ?? "nil")")
         }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by shin takeuchi on 2026/01/01.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -13,6 +14,7 @@ struct growth_log_iosApp: App {
         WindowGroup {
             RootView()
         }
+        .modelContainer(for: [Log.self])
     }
 }
 
