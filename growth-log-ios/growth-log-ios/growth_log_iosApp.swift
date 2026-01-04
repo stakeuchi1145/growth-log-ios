@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 @main
-struct growth_log_iosApp: App {
+struct GrowthLogIOSApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()

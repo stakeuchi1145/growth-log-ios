@@ -17,13 +17,13 @@ final class DateHelper {
         return formatter.string(from: date)
     }
 
-    static func toTime(date: Date) -> String {
+    static func toTime(date: Date = Date()) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ja_JP")
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.timeZone = .current
         formatter.dateFormat = "hh:mm"
-        return formatter.string(from: Date())
+        return formatter.string(from: date)
     }
 
     static func convertDate(date: String) -> Date {

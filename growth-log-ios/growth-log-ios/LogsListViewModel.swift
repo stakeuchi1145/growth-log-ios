@@ -22,8 +22,8 @@ class LogsListViewModel: ObservableObject {
                 learn: "なし",
                 block: "なし",
                 next: "なし",
-                createdAt: DateHelper.toDay(date: DateHelper.convertDate(date: "2026-01-02 11:30:00"), format: "yyyy-MM-dd hh:mm:ss"),
-                updatedAt: DateHelper.toDay(date: DateHelper.convertDate(date: "2026-01-02 11:30:00"), format: "yyyy-MM-dd hh:mm:ss")
+                createdAt: "2026-01-02 11:30:00",
+                updatedAt: "2026-01-02 11:30:00"
             )
         )
     }
@@ -38,18 +38,21 @@ class LogsListViewModel: ObservableObject {
         
         guard !logDays.isEmpty else { return 0 }
         
-        // 2) 今日を起点にする（※ 昨日からでもOK）
+        // 2) 昨日を起点にする（今日はまだ完了していない可能性があるため）
         var streak = 0
-        var currentDay = calendar.date(
+        guard var currentDay = calendar.date(
             byAdding: .day,
             value: -1,
             to: DateHelper.startOfDay(date: Date(), calendar: calendar)
-        )!
+        ) else { return 0 }
         
         // 3) 連続チェック
         while logDays.contains(currentDay) {
             streak += 1
-            currentDay = calendar.date(byAdding: .day, value: -1, to: currentDay)!
+            guard let previousDay = calendar.date(byAdding: .day, value: -1, to: currentDay) else {
+                break
+            }
+            currentDay = previousDay
         }
         
         return streak
@@ -63,6 +66,7 @@ class LogsListViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func add(context: ModelContext, log: Log) {
         context.insert(log)
     }

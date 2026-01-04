@@ -192,8 +192,8 @@ struct LogRegisterView: View {
                                 HStack(spacing: 6) {
                                     ForEach(LogCategory.allCases) { category in
                                         Button {
-                                            if selected.contains(category) {
-                                                selected.remove(at: selected.firstIndex(of: category) ?? 0)
+                                            if let index = selected.firstIndex(of: category) {
+                                                selected.remove(at: index)
                                             } else {
                                                 selected.append(category)
                                             }
